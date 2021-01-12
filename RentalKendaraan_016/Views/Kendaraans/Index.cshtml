@@ -1,15 +1,11 @@
-﻿@model IEnumerable<RentalKendaraan_016.Models.Kendaraan>
-
+﻿@model PaginatedList<RentalKendaraan_016.Models.Kendaraan>
 @{
     ViewData["Title"] = "Index";
 }
-
 <h2>Index</h2>
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-
 @using (Html.BeginForm("Index", "Kendaraans", FormMethod.Get))
 {
     <p>
@@ -18,27 +14,27 @@
         <input type="submit" value="Filter" />
     </p>
 }
-
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayName("Nama Kendaraan");
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    Kendaraan
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NamaKendaraan)
+                NoPolisi
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NoPolisi)
+                NoStnk
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NoStnk)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    Ketersediaan
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ketersediaan)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdJenisKendaraanNavigation)
+                Jenis Kendaraan
             </th>
             <th></th>
         </tr>
@@ -71,3 +67,21 @@
         }
     </tbody>
 </table>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex -1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex +1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

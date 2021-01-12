@@ -1,15 +1,11 @@
-﻿@model IEnumerable<RentalKendaraan_016.Models.Pengembalian>
-
+﻿@model PaginatedList<RentalKendaraan_016.Models.Pengembalian>
 @{
     ViewData["Title"] = "Index";
 }
-
 <h2>Index</h2>
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-
 @using (Html.BeginForm("Index", "Pengembalians", FormMethod.Get))
 {
     <p>
@@ -18,21 +14,24 @@
         <input type="submit" value="Filter" />
     </p>
 }
-
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TglPengembalian)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    Tanggal Pengembalian
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Denda)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                    Denda
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdKondisiNavigation)
+                Kondisi
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdPeminjamanNavigation)
+                Tanggal Peminjaman
             </th>
             <th></th>
         </tr>
@@ -48,10 +47,10 @@
                     @Html.DisplayFor(modelItem => item.Denda)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IdKondisiNavigation.IdKondisi)
+                    @Html.DisplayFor(modelItem => item.IdKondisiNavigation.NamaKondisi)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IdPeminjamanNavigation.IdPeminjaman)
+                    @Html.DisplayFor(modelItem => item.IdPeminjamanNavigation.TglPeminjaman)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.IdPengembalian">Edit</a> |
@@ -62,3 +61,21 @@
         }
     </tbody>
 </table>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex -1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex +1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

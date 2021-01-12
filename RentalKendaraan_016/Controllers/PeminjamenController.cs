@@ -19,7 +19,7 @@ namespace RentalKendaraan_016.Controllers
         }
 
         // GET: Peminjamen
-        public async Task<IActionResult> Index(string ktsd, string searchString, string sortOrder, string currentFilter, int? pageNumber, string shortOrder)
+        public async Task<IActionResult> Index(string ktsd, string searchString, string sortOrder, string currentFilter, int? pageNumber)
         {
             //buat list menyimpan ketersediaan
             var ktsdList = new List<string>();
@@ -48,7 +48,6 @@ namespace RentalKendaraan_016.Controllers
             }
 
             //membuat pagedList
-            //membuat pagedList
             ViewData["CurrentSort"] = sortOrder;
             if (searchString != null)
             {
@@ -58,7 +57,6 @@ namespace RentalKendaraan_016.Controllers
             {
                 searchString = currentFilter;
             }
-
 
             //untuk sorting
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -77,8 +75,8 @@ namespace RentalKendaraan_016.Controllers
                     break;
             }
 
-            ViewData["CurrentFilter"] = searchString;
 
+            ViewData["CurrentFilter"] = searchString;
             //definisi jumlah data pada halaman
             int pageSize = 5;
 
