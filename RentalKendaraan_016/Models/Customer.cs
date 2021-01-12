@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace RentalKendaraan_016.Models
 {
@@ -11,9 +12,18 @@ namespace RentalKendaraan_016.Models
         }
 
         public int IdCustomer { get; set; }
+
+        [Required(ErrorMessage = "Nama Customer Wajib diisi")]
         public string NamaCustomer { get; set; }
+
+        [RegularExpression("^[0-9]*$", ErrorMessage = "nik hanya boleh di isi dengan angka")]
         public string Nik { get; set; }
+
+        [Required(ErrorMessage = "Alamat harus di isi")]
         public string Alamat { get; set; }
+
+        [MinLength(10, ErrorMessage = "No HP minimal 10 angka")]
+        [MaxLength(13, ErrorMessage = "No HP maksimal 13 angka")]
         public string NoHp { get; set; }
         public int? IdGender { get; set; }
 
